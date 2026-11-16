@@ -1,9 +1,13 @@
-export default function ServiceCard({ number, title, children }) {
+import { Link } from "react-router-dom";
+
+export default function ServiceCard({ title, children }) {
   return (
     <article className="service-card">
-      <span className="service-number">{number}</span>
       <h3>{title}</h3>
       <p>{children}</p>
+      <Link to="/services" className="service-card-link">
+        Learn More <span aria-hidden="true">→</span>
+      </Link>
     </article>
   );
 }

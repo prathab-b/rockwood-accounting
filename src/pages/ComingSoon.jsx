@@ -1,7 +1,7 @@
 
 import { Link } from "react-router-dom";
 import landingBannerBackground from "../assets/landing-banner-background.jpeg";
-import photo from "../assets/photo.png";
+import photo from "../assets/photo.jpeg";
 
 export default function ComingSoon({ pageName }) {
   return (

@@ -314,19 +314,19 @@ export default function Home() {
             </Link>
           </div>
           <div className="service-grid">
-            <ServiceCard number="01" title="Accounting Services">
-              Practical accounting support to help keep your financial information organized.
+            <ServiceCard title="Accounting Services">
+              Practical accounting support to keep your financial information organized.
             </ServiceCard>
-            <ServiceCard number="02" title="Business Advisory Services">
+            <ServiceCard title="Business Advisory Services">
               Clear financial perspective to support better day-to-day business decisions.
             </ServiceCard>
-            <ServiceCard number="03" title="Estate & Trust">
+            <ServiceCard title="Estate & Trust">
               Thoughtful accounting support for estate and trust-related financial needs.
             </ServiceCard>
-            <ServiceCard number="04" title="Taxation Services">
+            <ServiceCard title="Taxation Services">
               Tax support focused on clarity, accuracy, and keeping your obligations organized.
             </ServiceCard>
-            <ServiceCard number="05" title="Bookkeeping Support">
+            <ServiceCard title="Bookkeeping Support">
               Reliable recordkeeping support so you can spend more time running your business.
             </ServiceCard>
           </div>
