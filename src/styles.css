@@ -90,50 +90,67 @@ main {
 .site-header {
   position: sticky;
   top: 0;
-  z-index: 20;
+  z-index: 1000;
+  width: 100%;
   background: var(--orange-pale);
   box-shadow: 0 4px 18px rgba(28, 27, 32, .05);
-  border-bottom: 1px solid #ffa500;
+  border-bottom: 1px solid var(--orange);
+  transition: background .25s ease, box-shadow .25s ease;
 }
 
-/* Shared transparent header over all hero pages */
-.site-shell:has(.landing-banner) .site-header,
-.site-shell:has(.services-hero) .site-header,
-.site-shell:has(.about-hero) .site-header,
-.site-shell:has(.coming-soon-hero) .site-header {
+/* Transparent header at the top of hero pages */
+.site-shell:has(.landing-banner) .site-header:not(.is-scrolled),
+.site-shell:has(.services-hero) .site-header:not(.is-scrolled),
+.site-shell:has(.about-hero) .site-header:not(.is-scrolled),
+.site-shell:has(.coming-soon-hero) .site-header:not(.is-scrolled) {
   position: absolute;
-  inset: 0 0 auto;
+  top: 0;
+  left: 0;
   width: 100%;
   background: transparent;
   box-shadow: none;
+}
+
+/* White header after scrolling */
+.site-header.is-scrolled {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: var(--orange-pale);
+  box-shadow: 0 3px 14px rgba(0, 0, 0, .12);
   border-bottom: 1px solid var(--orange);
 }
 
-/* White branding and navigation over hero images */
+/* Black branding and navigation text after scrolling */
+.site-header.is-scrolled .brand,
+.site-header.is-scrolled .nav-links:not(.is-open) a:not(.nav-cta):not(.nav-phone) {
+  color: var(--dark);
+}
+
+/* Black separators after scrolling */
+.site-header.is-scrolled .nav-links > a:not(.nav-cta):not(.nav-phone)
+  + a:not(.nav-cta):not(.nav-phone)::before {
+  background: rgba(103, 101, 108, .35);
+}
+
+/* White branding and desktop navigation over hero images */
 .site-shell:has(.landing-banner) .brand,
 .site-shell:has(.services-hero) .brand,
 .site-shell:has(.about-hero) .brand,
 .site-shell:has(.coming-soon-hero) .brand,
-.site-shell:has(.landing-banner) .nav-links a:not(.nav-cta),
-.site-shell:has(.services-hero) .nav-links a:not(.nav-cta),
-.site-shell:has(.about-hero) .nav-links a:not(.nav-cta),
-.site-shell:has(.coming-soon-hero) .nav-links a:not(.nav-cta) {
+.site-shell:has(.landing-banner) .nav-links:not(.is-open) a:not(.nav-cta),
+.site-shell:has(.services-hero) .nav-links:not(.is-open) a:not(.nav-cta),
+.site-shell:has(.about-hero) .nav-links:not(.is-open) a:not(.nav-cta),
+.site-shell:has(.coming-soon-hero) .nav-links:not(.is-open) a:not(.nav-cta) {
   color: var(--white);
 }
 
-.site-shell:has(.landing-banner) .nav-links a.active,
-.site-shell:has(.services-hero) .nav-links a.active,
-.site-shell:has(.about-hero) .nav-links a.active,
-.site-shell:has(.coming-soon-hero) .nav-links a.active {
+.site-shell:has(.landing-banner) .nav-links:not(.is-open) a.active,
+.site-shell:has(.services-hero) .nav-links:not(.is-open) a.active,
+.site-shell:has(.about-hero) .nav-links:not(.is-open) a.active,
+.site-shell:has(.coming-soon-hero) .nav-links:not(.is-open) a.active {
   color: var(--white);
-}
-
-/* White navigation separators */
-.site-shell:has(.landing-banner) .nav-links a:not(.nav-cta) + a:not(.nav-cta)::before,
-.site-shell:has(.services-hero) .nav-links a:not(.nav-cta) + a:not(.nav-cta)::before,
-.site-shell:has(.about-hero) .nav-links a:not(.nav-cta) + a:not(.nav-cta)::before,
-.site-shell:has(.coming-soon-hero) .nav-links a:not(.nav-cta) + a:not(.nav-cta)::before {
-  background: var(--white);
 }
 
 .navbar {
@@ -151,6 +168,7 @@ main {
   text-decoration: none;
   color: var(--dark);
   flex-shrink: 0;
+  position: relative;
 }
 
 .brand-logo {
@@ -195,8 +213,10 @@ main {
   white-space: nowrap;
 }
 
-/* Separators between navigation links */
-.nav-links a:not(.nav-cta) + a:not(.nav-cta)::before {
+
+/* Separators between navigation links only */
+.nav-links > a:not(.nav-cta):not(.nav-phone)
+  + a:not(.nav-cta):not(.nav-phone)::before {
   content: "";
   position: absolute;
   left: 0;
@@ -207,13 +227,24 @@ main {
   transform: translateY(-50%);
 }
 
+/* White separators on hero pages */
 .site-shell:has(.landing-banner)
-  .nav-links a:not(.nav-cta) + a:not(.nav-cta)::before {
+  .nav-links > a:not(.nav-cta):not(.nav-phone)
+  + a:not(.nav-cta):not(.nav-phone)::before,
+.site-shell:has(.services-hero)
+  .nav-links > a:not(.nav-cta):not(.nav-phone)
+  + a:not(.nav-cta):not(.nav-phone)::before,
+.site-shell:has(.about-hero)
+  .nav-links > a:not(.nav-cta):not(.nav-phone)
+  + a:not(.nav-cta):not(.nav-phone)::before,
+.site-shell:has(.coming-soon-hero)
+  .nav-links > a:not(.nav-cta):not(.nav-phone)
+  + a:not(.nav-cta):not(.nav-phone)::before {
   background: rgba(255, 255, 255, .35);
 }
 
 /* Desktop hover and active underline */
-.nav-links a:not(.nav-cta)::after {
+.nav-links a:not(.nav-cta):not(.nav-phone)::after {
   content: "";
   position: absolute;
   left: 20px;
@@ -226,8 +257,8 @@ main {
   transition: transform .2s ease;
 }
 
-.nav-links a:not(.nav-cta):hover::after,
-.nav-links a:not(.nav-cta).active::after {
+.nav-links a:not(.nav-cta):not(.nav-phone):hover::after,
+.nav-links a:not(.nav-cta):not(.nav-phone).active::after {
   transform: scaleX(1);
 }
 
@@ -259,32 +290,39 @@ main {
   transform: translateY(-2px);
 }
 
-/* Hamburger button: hidden on desktop */
+/* Hamburger button */
 .nav-toggle {
   display: none;
-  width: 46px;
-  height: 46px;
-  padding: 10px;
-  border: 1px solid rgba(255, 255, 255, .35);
-  border-radius: 6px;
-  background: var(--dark);
+  width: 48px;
+  height: 48px;
+  padding: 11px;
+  border: 1px solid var(--orange);
+  border-radius: 7px;
+  background: var(--orange);
   cursor: pointer;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 6px;
+  gap: 5px;
   flex-shrink: 0;
+  transition: background .2s ease, border-color .2s ease;
+}
+
+.nav-toggle:hover {
+  background: #e69500;
+  border-color: #e69500;
 }
 
 .nav-toggle span {
   display: block;
-  width: 22px;
-  height: 2px;
-  border-radius: 2px;
-  background: var(--white);
-  transition: transform .25s ease, opacity .2s ease;
+  width: 23px;
+  height: 3px;
+  border-radius: 3px;
+  background: var(--dark);
+  transition: transform .2s ease, opacity .2s ease;
 }
 
+/* Simple, symmetrical close icon */
 .nav-toggle.is-open span:first-child {
   transform: translateY(8px) rotate(45deg);
 }
@@ -567,6 +605,7 @@ h3 {
   display: flex;
   gap: 14px;
   margin-top: 35px;
+  align-items: center;
   flex-wrap: wrap;
 }
 
@@ -1225,6 +1264,7 @@ h3 {
     display: flex;
   }
 
+    /* Mobile dropdown */
   .nav-links {
     display: none;
     width: 100%;
@@ -1233,35 +1273,39 @@ h3 {
     gap: 4px;
     margin: 0;
     padding: 14px;
-    background: rgba(28, 27, 32, .97);
+    background: var(--white);
+    border: 1px solid var(--line);
     border-radius: 8px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, .12);
   }
 
   .nav-links.is-open {
     display: flex;
   }
 
-  .nav-links a:not(.nav-cta) {
+  /* Standard menu links */
+  .nav-links a:not(.nav-cta):not(.nav-phone) {
     position: relative;
     display: block;
     width: 100%;
     padding: 13px 16px;
     border-radius: 5px;
-    color: var(--white);
+    color: var(--dark);
     font-size: 16px;
     text-align: left;
     text-decoration: none;
     transition: color .2s ease, background-color .2s ease;
   }
 
-  .nav-links a:not(.nav-cta):hover,
-  .nav-links a:not(.nav-cta):focus-visible,
-  .nav-links a:not(.nav-cta).active {
-    color: var(--orange);
-    background: rgba(255, 165, 0, .12);
+  .nav-links a:not(.nav-cta):not(.nav-phone):hover,
+  .nav-links a:not(.nav-cta):not(.nav-phone):focus-visible,
+  .nav-links a:not(.nav-cta):not(.nav-phone).active {
+    color: var(--dark);
+    background: var(--orange-pale);
   }
 
-  .nav-links a:not(.nav-cta)::after {
+  /* Small orange underline on menu links */
+  .nav-links a:not(.nav-cta):not(.nav-phone)::after {
     left: 16px;
     right: auto;
     bottom: 6px;
@@ -1271,12 +1315,37 @@ h3 {
     transition: width .2s ease;
   }
 
-  .nav-links a:not(.nav-cta):hover::after,
-  .nav-links a:not(.nav-cta):focus-visible::after,
-  .nav-links a:not(.nav-cta).active::after {
+  .nav-links a:not(.nav-cta):not(.nav-phone):hover::after,
+  .nav-links a:not(.nav-cta):not(.nav-phone):focus-visible::after,
+  .nav-links a:not(.nav-cta):not(.nav-phone).active::after {
     width: 28px;
   }
 
+  /* Phone button */
+  .nav-links .nav-phone {
+    display: flex;
+    width: 100%;
+    min-height: 48px;
+    margin: 4px 0 0;
+    padding: 0 16px;
+    align-items: center;
+    justify-content: center;
+    background: #000;
+    color: var(--white) !important;
+    border: 2px solid #000;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  .nav-links .nav-phone:hover,
+  .nav-links .nav-phone:focus-visible {
+    background: #000;
+    border-color: #000;
+    color: var(--white) !important;
+  }
+
+  /* Book a meeting button */
   .nav-links .nav-cta {
     display: flex;
     width: 100%;
@@ -1292,9 +1361,9 @@ h3 {
 
   .nav-links .nav-cta:hover,
   .nav-links .nav-cta:focus-visible {
-    background: transparent;
-    color: var(--orange) !important;
-    border-color: var(--orange);
+    background: var(--dark);
+    color: var(--white) !important;
+    border-color: var(--dark);
   }
 
   .nav-links a:focus-visible {
@@ -2119,4 +2188,193 @@ h3 {
     align-items: flex-start;
     flex-direction: column;
   }
+}
+
+/* ========================================
+   MICROSOFT BOOKINGS POPUP
+======================================== */
+
+.booking-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(28, 27, 32, .82);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+.booking-modal {
+  display: flex;
+  flex-direction: column;
+  width: min(1200px, 100%);
+  height: min(900px, calc(100dvh - 48px));
+  min-height: 0;
+  background: var(--white);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.booking-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 18px 26px;
+  flex: 0 0 auto;
+  border-bottom: 1px solid var(--line);
+}
+
+.booking-modal-header h2 {
+  margin: 0 0 4px;
+  font-size: 1.8rem;
+}
+
+.booking-modal-header p {
+  margin: 0;
+  color: var(--muted);
+  font-size: .9rem;
+}
+
+.booking-modal-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: var(--white);
+  color: var(--dark);
+  font-size: 30px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.booking-modal-close:hover {
+  background: var(--orange);
+  border-color: var(--orange);
+}
+
+.booking-modal iframe {
+  display: block;
+  width: 100%;
+  height: auto;
+  min-height: 0;
+  flex: 1 1 0;
+  border: 0;
+  background: var(--white);
+}
+
+.booking-modal-footer {
+  flex: 0 0 auto;
+  padding: 12px 24px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: .9rem;
+  text-align: center;
+}
+
+.booking-modal-footer a {
+  color: var(--dark);
+  font-weight: 700;
+  text-decoration-color: var(--orange);
+  text-underline-offset: 3px;
+}
+
+.booking-modal-footer a:hover {
+  color: var(--orange);
+}
+
+/* Mobile */
+@media (max-width: 760px) {
+  .booking-modal-backdrop {
+    align-items: center;
+    padding: 10px;
+  }
+
+  .booking-modal {
+    width: 100%;
+    height: calc(100dvh - 20px);
+    border-radius: 8px;
+  }
+
+  .booking-modal-header {
+    padding: 14px 16px;
+  }
+
+  .booking-modal-header h2 {
+    font-size: 1.4rem;
+  }
+
+  .booking-modal iframe {
+    flex: 1 1 0;
+  }
+
+  .booking-modal-footer {
+    padding: 10px;
+    font-size: .8rem;
+  }
+}
+
+/* Desktop phone button */
+.nav-phone {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  margin-left: 16px;
+  padding: 0 20px;
+  border: 2px solid #000;
+  border-radius: 8px;
+  background: #000;
+  color: var(--white) !important;
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1;
+  text-decoration: none;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: background .2s ease, color .2s ease, transform .2s ease;
+  gap: 9px;
+  letter-spacing: .02em;
+}
+
+.nav-phone:hover {
+  background: var(--orange);
+  border-color: var(--orange);
+  color: #000 !important;
+  transform: translateY(-2px);
+}
+
+/* Phone symbol */
+.nav-phone::before {
+  content: "📞︎";
+  font-size: 17px;
+  line-height: 1;
+}
+
+.cta-inner {
+  position: relative;
+}
+
+.cta-cpa-logo {
+  position: absolute;
+  right: calc(100% + 40px);
+  top: 50%;
+  transform: translateY(-50%);
+  width: 170px;
+  height: 130px;
+  padding: 12px;
+  object-fit: contain;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, .12);
 }

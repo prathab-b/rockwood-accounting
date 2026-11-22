@@ -31,22 +31,22 @@ export default function Careers() {
             <div className="career-listing-header">
               <div>
                 <p className="eyebrow">Seasonal · Full-Time</p>
-                <h3>Seasonal Receptionist/Bookkeeper</h3>
+                <h3>Seasonal Office Administrator/Bookkeeper</h3>
               </div>
               <span className="career-tag">Tax Season</span>
             </div>
 
             <p>
               Rockwood Accounting & Tax Services is seeking a
-              personable and organized Full-Time Receptionist/Bookkeeper to
-              support our office during tax season.
+              personable and organized Full-Time, Seasonal Office Administrator/Bookkeeper to
+              support our office during this tax season.
             </p>
 
             <h4>Responsibilities</h4>
             <ul>
               <li>Welcome clients and assist with front-desk inquiries.</li>
               <li>Answer and direct incoming phone calls.</li>
-              <li>Assist with appointment scheduling and coordination.</li>
+              <li>Assist with bookkeeping and data entry.</li>
               <li>Help organize documents and maintain office records.</li>
               <li>Provide general administrative support to the team.</li>
             </ul>
@@ -55,17 +55,15 @@ export default function Careers() {
             <ul>
               <li>Strong communication and interpersonal skills.</li>
               <li>Organized, dependable, and detail-oriented.</li>
-              <li>Comfortable using computers and common office software.</li>
-              <li>Previous reception or administrative experience is an asset.</li>
-              <li>3-5 years in a professional setting.</li>
+              <li>Experience with accounting software such as QuickBooks, Excel, etc.</li>
+              <li>1-2 years of office administrative/bookkeeper experience is preferred.</li>
             </ul>
 
             <div className="career-application">
               <p>
-                Interested in joining our team? Please email your
-                resume and a brief introduction to:
+                Please email your resume and a brief introduction to:
               </p>
-              <a href="mailto:mandeepbhatti@bhattiaccounting.com?subject=Part-Time%20Receptionist%20Application">
+              <a href="mailto:mandeepbhatti@bhattiaccounting.com?subject=Office%20Administrator%20%2F%20Bookkeeper%20Application">
                 mandeepbhatti@bhattiaccounting.com
               </a>
             </div>

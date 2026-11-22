@@ -46,8 +46,8 @@ export default function Contact() {
 
           <form
             className="contact-card"
-            action="https://formspree.io/f/your-form-id"
-            method="POST"
+            // action="https://formspree.io/f/your-form-id"
+            // method="POST"
           >
             <label htmlFor="name">Full Name</label>
             <input
