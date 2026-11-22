@@ -75,7 +75,7 @@ export default function Contact() {
 
             <button
               className="button button-orange full-width"
-              type="submit"
+              // type="submit"
             >
               Send Message
             </button>
