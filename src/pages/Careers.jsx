@@ -1,5 +1,5 @@
 
-import careersHeroImage from "../assets/landing-banner-background.jpeg";
+import careersHeroImage from "../assets/careers-background.png";
 
 export default function Careers() {
   return (

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import aboutBackground from "../assets/landing-banner-background.jpeg";
+import aboutBackground from "../assets/about-background.png";
 import photo from "../assets/photo.jpeg";
 
 export default function About() {
