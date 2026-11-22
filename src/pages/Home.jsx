@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import landingBannerBackground from "../assets/landing-banner-background.jpeg";
 import landingBannerClarity from "../assets/landing-banner-clarity.jpeg";
 import landingBannerHeights from "../assets/landing-banner-heights.jpeg";
+import cpaLogo from "../assets/CPA-Logo.png";
 
 const reviews = [
   {
@@ -114,6 +115,7 @@ export default function Home() {
   ];
 
   const [activeSlide, setActiveSlide] = useState(0);
+  const [isBookingOpen, setIsBookingOpen] = useState(false);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -134,6 +136,30 @@ export default function Home() {
 
     return order;
   });
+
+  useEffect(() => {
+    if (!isBookingOpen) return;
+
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") {
+        setIsBookingOpen(false);
+      }
+    };
+
+    const previousBodyOverflow = document.body.style.overflow;
+    const previousHtmlOverflow = document.documentElement.style.overflow;
+
+    document.body.style.overflow = "hidden";
+    document.documentElement.style.overflow = "hidden";
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousBodyOverflow;
+      document.documentElement.style.overflow = previousHtmlOverflow;
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isBookingOpen]);
 
   const [activeReview, setActiveReview] = useState(0);
 
@@ -213,14 +239,14 @@ export default function Home() {
             </p>
 
             <div className="landing-actions">
-              <a
+              <button
+                type="button"
                 className="button button-orange"
-                // href="https://google.ca"
-                target="_blank"
-                rel="noopener noreferrer"
+                onClick={() => setIsBookingOpen(true)}
               >
-                Book A Meeting
-              </a>
+                Book a Meeting
+              </button>
+
               <Link className="button button-outline" to="/services">
                 Explore Services
               </Link>
@@ -335,20 +361,72 @@ export default function Home() {
 
       <section className="cta-section">
         <div className="container cta-inner">
+          <img className="cta-cpa-logo" src={cpaLogo} alt="CPA logo" />
+
           <div>
             <p className="eyebrow light">Let's talk</p>
             <h2>Ready to get your finances working for you?</h2>
           </div>
-          <a
+
+          <button
+            type="button"
             className="button button-light"
-            // href="https://google.ca"
-            target="_blank"
-            rel="noopener noreferrer"
+            onClick={() => setIsBookingOpen(true)}
           >
-            Book A Meeting
-          </a>
+            Book a Meeting
+          </button>
         </div>
       </section>
+
+      {isBookingOpen && (
+        <div
+          className="booking-modal-backdrop"
+          onClick={() => setIsBookingOpen(false)}
+        >
+          <div
+            className="booking-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="booking-modal-title"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <div className="booking-modal-header">
+              <div>
+                <h2 id="booking-modal-title">Book a Meeting</h2>
+                <p>Rockwood Accounting & Tax Services</p>
+              </div>
+
+              <button
+                type="button"
+                className="booking-modal-close"
+                onClick={() => setIsBookingOpen(false)}
+                aria-label="Close booking window"
+              >
+                &times;
+              </button>
+            </div>
+
+            <iframe
+              src="https://bookings.cloud.microsoft/book/RockwoodAccountingTaxServices1@bhattiaccounting.com/?ismsaljsauthenabled"
+              title="Rockwood Accounting online booking"
+              width="100%"
+              scrolling="yes"
+              style={{ border: 0 }}
+            />
+
+            <div className="booking-modal-footer">
+              Having trouble viewing the calendar?{" "}
+              <a
+                href="https://bookings.cloud.microsoft/book/RockwoodAccountingTaxServices1@bhattiaccounting.com/?ismsaljsauthenabled"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Schedule online
+              </a>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }

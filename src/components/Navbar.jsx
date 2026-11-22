@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { NavLink, Link } from "react-router-dom";
 import logo from "../assets/Logo.png";
 
@@ -13,11 +13,23 @@ const links = [
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 40);
+    };
+
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const closeMenu = () => setMenuOpen(false);
 
   return (
-    <header className="site-header">
+    <header className={`site-header ${isScrolled ? "is-scrolled" : ""}`}>
       <nav className="navbar container" aria-label="Main navigation">
         <Link className="brand" to="/" onClick={closeMenu}>
           <img className="brand-logo" src={logo} alt="Rockwood logo" />
@@ -55,6 +67,14 @@ export default function Navbar() {
               {label}
             </NavLink>
           ))}
+
+          <a
+            className="nav-phone"
+            href="tel:+15198564952"
+            onClick={closeMenu}
+          >
+            <span>(519) 856-4952</span>
+          </a>
 
           <a
             className="nav-cta"
